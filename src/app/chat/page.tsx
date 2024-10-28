@@ -69,6 +69,7 @@ export default function Chat() {
         <form action={handleAction} className="flex w-full max-w-3xl">
           <fieldset className="flex w-full gap-2">
             <input
+              autoFocus
               placeholder="Ask anything..."
               name="prompt"
               className="block w-full rounded border border-gray-300 p-2"
