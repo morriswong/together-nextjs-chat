@@ -1,6 +1,5 @@
 "use client";
 
-import { generateText } from "@/app/actions";
 import { FormEvent, useState } from "react";
 import Together from "together-ai";
 import { ChatCompletionStream } from "together-ai/lib/ChatCompletionStream";
@@ -25,15 +24,22 @@ export default function Chat() {
       },
     ]);
 
-    const stream = await generateText([
-      ...messages,
-      {
-        role: "user",
-        content: prompt,
-      },
-    ]);
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      body: JSON.stringify({
+        messages: [
+          ...messages,
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+      }),
+    });
 
-    ChatCompletionStream.fromReadableStream(stream)
+    if (!res.body) return;
+
+    ChatCompletionStream.fromReadableStream(res.body)
       .on("content", (delta, content) => {
         setMessages((messages) => {
           const lastMessage = messages.at(-1);
