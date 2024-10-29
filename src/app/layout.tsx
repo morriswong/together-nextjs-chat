@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
+import NavLink from "@/app/NavLink";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,8 +32,18 @@ export default function RootLayout({
       >
         <header className="bg-gray-100">
           <div className="mx-auto flex max-w-6xl gap-4 px-4 py-2">
-            <Link href="/">Ask</Link>
-            <Link href="/chat">Chat</Link>
+            <NavLink
+              className="text-gray-500 underline-offset-2 data-[active]:text-gray-900 data-[active]:underline"
+              href="/"
+            >
+              Ask a question
+            </NavLink>
+            <NavLink
+              className="text-gray-500 underline-offset-2 data-[active]:text-gray-900 data-[active]:underline"
+              href="/chat"
+            >
+              Chat
+            </NavLink>
           </div>
         </header>
 

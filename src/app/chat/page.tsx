@@ -1,26 +1,27 @@
 "use client";
 
 import { generateText } from "@/app/actions";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Together from "together-ai";
 import { ChatCompletionStream } from "together-ai/lib/ChatCompletionStream";
 
 export default function Chat() {
+  const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<
     Together.Chat.Completions.CompletionCreateParams.Message[]
   >([]);
   const [isPending, setIsPending] = useState(false);
 
-  async function handleAction(formData: FormData) {
-    setIsPending(true);
-    const content = formData.get("prompt");
-    if (typeof content !== "string") return;
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
+    setPrompt("");
+    setIsPending(true);
     setMessages((messages) => [
       ...messages,
       {
         role: "user",
-        content,
+        content: prompt,
       },
     ]);
 
@@ -28,11 +29,11 @@ export default function Chat() {
       ...messages,
       {
         role: "user",
-        content,
+        content: prompt,
       },
     ]);
-    const runner = ChatCompletionStream.fromReadableStream(stream);
-    runner
+
+    ChatCompletionStream.fromReadableStream(stream)
       .on("content", (delta, content) => {
         setMessages((messages) => {
           const lastMessage = messages.at(-1);
@@ -51,7 +52,7 @@ export default function Chat() {
 
   return (
     <>
-      <div className="h-0 min-h-0 grow overflow-y-scroll">
+      <div className="h-0 grow overflow-y-scroll">
         <div className="space-y-4 py-8">
           {messages.map((message, i) => (
             <div key={i} className="mx-auto flex max-w-3xl">
@@ -68,16 +69,18 @@ export default function Chat() {
       </div>
 
       <div className="mb-8 flex justify-center gap-2">
-        <form action={handleAction} className="flex w-full max-w-3xl">
+        <form onSubmit={handleSubmit} className="flex w-full max-w-3xl">
           <fieldset className="flex w-full gap-2">
             <input
               autoFocus
               placeholder="Ask anything..."
-              name="prompt"
-              className="block w-full rounded border border-gray-300 p-2"
+              required
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              className="block w-full rounded border border-gray-300 p-2 outline-black"
             />
             <button
-              className="rounded bg-black px-3 py-1 font-medium text-white disabled:opacity-50"
+              className="rounded bg-black px-3 py-1 font-medium text-white outline-offset-[3px] outline-black disabled:opacity-50"
               type="submit"
               disabled={isPending}
             >
