@@ -1,46 +1,50 @@
 "use client";
 
-import { generateText } from "@/app/actions";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { ChatCompletionStream } from "together-ai/lib/ChatCompletionStream";
 
 export default function Chat() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const [isPending, setIsPending] = useState(false);
+  const [status, setStatus] = useState<"idle" | "pending" | "done">("idle");
 
-  async function handleAction(formData: FormData) {
-    const content = formData.get("prompt");
-    if (typeof content !== "string") return;
-    setIsPending(true);
-    setQuestion(content);
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-    const stream = await generateText([{ role: "user", content }]);
-    const runner = ChatCompletionStream.fromReadableStream(stream);
-    runner
+    setStatus("pending");
+
+    const res = await fetch("/api/answer", {
+      method: "POST",
+      body: JSON.stringify({ question }),
+    });
+
+    if (!res.body) return;
+
+    ChatCompletionStream.fromReadableStream(res.body)
       .on("content", (delta) => setAnswer((text) => text + delta))
-      .on("end", () => setIsPending(false));
+      .on("end", () => setStatus("done"));
   }
 
   return (
     <div className="mx-auto flex w-full max-w-3xl grow flex-col px-4">
-      {!question ? (
+      {status === "idle" ? (
         <div className="flex grow flex-col justify-center">
-          <form action={handleAction} className="flex w-full">
-            <fieldset className="flex w-full gap-2" disabled={isPending}>
-              <input
-                placeholder="Ask anything..."
-                autoFocus
-                name="prompt"
-                className="block w-full rounded border border-gray-300 p-2"
-              />
-              <button
-                className="rounded bg-black px-3 py-1 font-medium text-white"
-                type="submit"
-              >
-                Submit
-              </button>
-            </fieldset>
+          <form onSubmit={handleSubmit} className="flex w-full gap-2">
+            <input
+              placeholder="Ask anything..."
+              autoFocus
+              name="prompt"
+              required
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              className="block w-full rounded border border-gray-300 p-2 outline-black"
+            />
+            <button
+              className="rounded bg-black px-3 py-1 font-medium text-white outline-offset-[3px] outline-black"
+              type="submit"
+            >
+              Submit
+            </button>
           </form>
         </div>
       ) : (
@@ -52,10 +56,11 @@ export default function Chat() {
               <div className="text-right">
                 <button
                   className="rounded bg-black px-3 py-2 font-medium text-white disabled:opacity-50"
-                  disabled={isPending}
+                  disabled={status === "pending"}
                   onClick={() => {
                     setQuestion("");
                     setAnswer("");
+                    setStatus("idle");
                   }}
                 >
                   Reset

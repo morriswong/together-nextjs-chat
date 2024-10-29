@@ -50,22 +50,24 @@ export default function Chat() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl">
-      <div className="space-y-4 py-8">
-        {messages.map((message, i) => (
-          <div key={i} className="flex">
-            {message.role === "user" ? (
-              <div className="ml-auto rounded-full bg-blue-500 px-4 py-2 text-white">
-                {message.content}
-              </div>
-            ) : (
-              <div className="whitespace-pre-wrap">{message.content}</div>
-            )}
-          </div>
-        ))}
+    <>
+      <div className="h-0 min-h-0 grow overflow-y-scroll">
+        <div className="space-y-4 py-8">
+          {messages.map((message, i) => (
+            <div key={i} className="mx-auto flex max-w-3xl">
+              {message.role === "user" ? (
+                <div className="ml-auto rounded-full bg-blue-500 px-4 py-2 text-white">
+                  {message.content}
+                </div>
+              ) : (
+                <div className="whitespace-pre-wrap">{message.content}</div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 m-8 flex justify-center gap-2">
+      <div className="mb-8 flex justify-center gap-2">
         <form action={handleAction} className="flex w-full max-w-3xl">
           <fieldset className="flex w-full gap-2">
             <input
@@ -84,6 +86,6 @@ export default function Chat() {
           </fieldset>
         </form>
       </div>
-    </div>
+    </>
   );
 }

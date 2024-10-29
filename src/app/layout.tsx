@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +29,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-full flex-col antialiased`}
       >
-        {children}
+        <header className="bg-gray-100">
+          <div className="mx-auto flex max-w-6xl gap-4 px-4 py-2">
+            <Link href="/">Ask</Link>
+            <Link href="/chat">Chat</Link>
+          </div>
+        </header>
+
+        <main className="flex grow flex-col">{children}</main>
+
+        <footer className="bg-gray-100">
+          <div className="mx-auto flex max-w-6xl gap-4 px-4 py-6">
+            <Link href="https://www.together.ai/">Powered by Together AI</Link>
+          </div>
+        </footer>
       </body>
     </html>
   );
