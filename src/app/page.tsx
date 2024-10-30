@@ -31,7 +31,7 @@ export default function Chat() {
         <div className="flex grow flex-col justify-center">
           <form onSubmit={handleSubmit} className="flex w-full gap-2">
             <input
-              placeholder="Ask anything..."
+              placeholder="Ask me a question"
               autoFocus
               name="prompt"
               required

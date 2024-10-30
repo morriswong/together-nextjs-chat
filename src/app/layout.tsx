@@ -30,16 +30,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-full flex-col antialiased`}
       >
-        <header className="bg-gray-100">
-          <div className="mx-auto flex max-w-6xl gap-4 px-4 py-2">
+        <header className="text-sm font-medium">
+          <div className="mx-auto flex max-w-6xl gap-4 px-4 py-4">
             <NavLink
-              className="text-gray-500 underline-offset-2 data-[active]:text-gray-900 data-[active]:underline"
+              className="text-gray-400 data-[active]:text-gray-900"
               href="/"
             >
               Ask a question
             </NavLink>
             <NavLink
-              className="text-gray-500 underline-offset-2 data-[active]:text-gray-900 data-[active]:underline"
+              className="text-gray-400 data-[active]:text-gray-900"
               href="/chat"
             >
               Chat
@@ -49,9 +49,21 @@ export default function RootLayout({
 
         <main className="flex grow flex-col">{children}</main>
 
-        <footer className="bg-gray-100">
-          <div className="mx-auto flex max-w-6xl gap-4 px-4 py-6">
-            <Link href="https://www.together.ai/">Powered by Together AI</Link>
+        <footer className="bg-gray-50 text-sm text-gray-500">
+          <div className="mx-auto max-w-6xl px-4 py-6">
+            Powered by{" "}
+            <Link
+              className="font-medium underline underline-offset-2"
+              target="_blank"
+              href="https://www.together.ai/"
+            >
+              Together AI
+            </Link>
+            . View the source on{" "}
+            <Link href="#" className="font-medium underline underline-offset-2">
+              GitHub
+            </Link>
+            .
           </div>
         </footer>
       </body>

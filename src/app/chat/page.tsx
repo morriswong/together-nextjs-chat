@@ -58,7 +58,7 @@ export default function Chat() {
 
   return (
     <>
-      <div className="h-0 grow overflow-y-scroll">
+      <div className="flex h-0 grow flex-col-reverse overflow-y-scroll">
         <div className="space-y-4 py-8">
           {messages.map((message, i) => (
             <div key={i} className="mx-auto flex max-w-3xl">
@@ -79,7 +79,7 @@ export default function Chat() {
           <fieldset className="flex w-full gap-2">
             <input
               autoFocus
-              placeholder="Ask anything..."
+              placeholder="Send a message"
               required
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
