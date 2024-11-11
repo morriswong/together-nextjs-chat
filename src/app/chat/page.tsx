@@ -59,6 +59,19 @@ export default function Chat() {
   return (
     <>
       <div className="flex h-0 grow flex-col-reverse overflow-y-scroll">
+        <form action="">
+          <label htmlFor="">
+            <input
+              type="checkbox"
+              name="foo"
+              id=""
+              onChange={(e) => {
+                console.log(e.target.checked);
+              }}
+            />
+            Foo
+          </label>
+        </form>
         <div className="space-y-4 py-8">
           {messages.map((message, i) => (
             <div key={i} className="mx-auto flex max-w-3xl">
