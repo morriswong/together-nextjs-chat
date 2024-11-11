@@ -4,8 +4,8 @@ This demo app showcases how to use [Together AI's TypeScript SDK](https://github
 
 There are two routes:
 
-- Ask a question: [./app/page.tsx](./app/page.tsx)
-- Chat: [./app/chat/page.tsx](./app/chat/page.tsx)
+- Ask a question: [src/app/page.tsx](./src/app/page.tsx)
+- Chat: [src/app/chat/page.tsx](./src/app/chat/page.tsx)
 
 ## Running locally
 
