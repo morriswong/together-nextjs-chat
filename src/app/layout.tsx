@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
 import NavLink from "@/app/NavLink";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,6 +45,12 @@ export default function RootLayout({
             >
               Chat
             </NavLink>
+
+            <div className="ml-auto">
+              <a href="#" className="text-gray-500 hover:text-gray-900">
+                <GitHubLogoIcon width="20" height="20" />
+              </a>
+            </div>
           </div>
         </header>
 
