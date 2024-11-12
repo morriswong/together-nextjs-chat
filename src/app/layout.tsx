@@ -47,7 +47,10 @@ export default function RootLayout({
             </NavLink>
 
             <div className="ml-auto">
-              <a href="#" className="text-gray-500 hover:text-gray-900">
+              <a
+                href="https://github.com/samselikoff/together-nextjs-chat"
+                className="text-gray-500 hover:text-gray-900"
+              >
                 <GitHubLogoIcon width="20" height="20" />
               </a>
             </div>
@@ -67,7 +70,10 @@ export default function RootLayout({
               Together AI
             </Link>
             . View the source on{" "}
-            <Link href="#" className="font-medium underline underline-offset-2">
+            <Link
+              href="https://github.com/samselikoff/together-nextjs-chat"
+              className="font-medium underline underline-offset-2"
+            >
               GitHub
             </Link>
             .
