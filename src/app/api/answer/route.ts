@@ -1,6 +1,8 @@
 import Together from "together-ai";
 
-const together = new Together();
+const together = new Together({
+  apiKey: process.env.TOGETHER_API_KEY
+});
 
 export async function POST(request: Request) {
   const { question } = await request.json();
